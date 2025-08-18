@@ -2,13 +2,19 @@ import React, { useRef, useState, useEffect } from "react";
 import MediaInfoFactory from "mediainfo.js";
 import type { CSSProperties } from "react";
 
-// 👉 số checkpoint, chỉ cần sửa ở đây
-const SEGMENTS = 7;
-// xe chạy từ -20% đến 50%
-const startPos = -20;
-const endPos = 50;
+type RaceTrackType = {
+    trackID: number
+    SEGMENTS?: number
+    startPos?: number
+    endPos?: number
+}
 
-function RaceTrack() {
+function RaceTrack({
+    trackID,
+    SEGMENTS = 7,
+    startPos = -20,
+    endPos = 50
+}: RaceTrackType) {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const [duration, setDuration] = useState(0);
     const [fps, setFps] = useState<number>(30);
@@ -67,7 +73,7 @@ function RaceTrack() {
                     prevCheckpoint +
                     (nextCheckpoint - prevCheckpoint) * clampedProgress;
 
-                const car = document.getElementById("car-img");
+                const car = document.getElementById(`car-img-${trackID}`);
                 if (car) {
                     (car as HTMLImageElement).style.bottom = `${carPos}%`;
                 }
@@ -117,7 +123,7 @@ function RaceTrack() {
                 Trình duyệt không hỗ trợ video.
             </video>
             <img
-                id="car-img"
+                id={`car-img-${trackID}`}
                 src="/cars/type_1.png"
                 alt="xe"
                 style={styles.car}

@@ -1,7 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-// import './App.css'
 import RaceTrack from './component/RaceTrack'
 
 function App() {
@@ -9,10 +6,10 @@ function App() {
 
   return (
     <div style={{width: "100vw", display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
-      <RaceTrack />
-      <RaceTrack />
-      <RaceTrack />
-      <RaceTrack />
+      <RaceTrack trackID={1}/>
+      <RaceTrack trackID={2}/>
+      <RaceTrack trackID={3}/>
+      <RaceTrack trackID={4}/>
     </div>
   )
 }
