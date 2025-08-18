@@ -7,13 +7,15 @@ type RaceTrackType = {
     SEGMENTS?: number
     startPos?: number
     endPos?: number
+    carType?: number
 }
 
 function RaceTrack({
     trackID,
     SEGMENTS = 7,
     startPos = -20,
-    endPos = 50
+    endPos = 50,
+    carType = 1
 }: RaceTrackType) {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const [duration, setDuration] = useState(0);
@@ -122,12 +124,16 @@ function RaceTrack({
                 <source src="/raceTrack.webm" type="video/webm" />
                 Trình duyệt không hỗ trợ video.
             </video>
+            <div style={styles.GroupCar} id={`car-img-${trackID}`}>
             <img
-                id={`car-img-${trackID}`}
-                src="/cars/type_1.png"
+                src={`/cars/type_${carType}.png`}
                 alt="xe"
                 style={styles.car}
             />
+
+            <div style={styles.text}>{carType}</div>
+            </div>
+
         </div>
     );
 }
@@ -139,6 +145,7 @@ const styles: { [key: string]: CSSProperties } = {
         width: "20vw",
         overflow: "hidden",
         display: "flex",
+        flexDirection: 'column',
         justifyContent: "center",
     },
     video: {
@@ -146,15 +153,34 @@ const styles: { [key: string]: CSSProperties } = {
         width: "100%",
         objectFit: "fill",
     },
-    car: {
+    GroupCar: {
         position: "absolute",
         bottom: "-20%",
         left: "50%",
         transform: "translateX(-50%)",
-        width: "150%",
-        transition: "bottom 0.05s linear"
+        width: "50%",       // tuỳ chỉnh cho phù hợp
+        display: "inline-block",
     },
+    car: {
+        width: "100%",
+        display: "block",
+    },
+    text: {
+        position: "absolute",
+        textAlign: "center",
+        width: "40%",
+        height: "20%",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -0%)",
+        fontSize: "2rem",
+        fontWeight: "bold",
+        color: "#000",          // màu chữ
+        backgroundColor: "rgba(255,255,255,0.6)", // nền mờ
+        borderRadius: "50%"
+    }
 };
+
 
 
 export default RaceTrack;
