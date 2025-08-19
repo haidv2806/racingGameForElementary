@@ -1,4 +1,3 @@
-import React from "react";
 import Modal from "react-modal";
 import type { CSSProperties } from "react";
 
@@ -19,22 +18,26 @@ function OpeningModal({ isOpen, onClose }: OpeningModalProps) {
         content: styles.content,
       }}
     >
-      <div style={styles.container}>
-        {/* GIF intro */}
-        <img
-          src="/robot/waved.gif" // thay bằng gif thật
-          alt="Race Opening"
-          style={styles.gif}
-        />
+      <div style={styles.backgroundWrapper}>
+        {/* Nền */}
+        <img src="/theme.png" alt="Theme" style={styles.backgroundImg} />
 
-        {/* Title */}
-        <div style={styles.title1}>THỬ THÁCH</div>
-        <div style={styles.title2}>ĐƯỜNG ĐUA SIÊU TỐC</div>
+        {/* Container căn giữa 3 phần tử */}
+        <div style={styles.centerContainer}>
+          {/* Text trên cùng */}
+          <div style={styles.textContainer}>
+            <div style={styles.title1}>THỬ THÁCH</div>
+            <div style={styles.title2}>ĐƯỜNG ĐUA SIÊU TỐC</div>
+          </div>
 
-        {/* Nút đóng */}
-        <button style={styles.button} onClick={onClose}>
-          Bắt đầu
-        </button>
+          {/* GIF */}
+          <img src="/robot/waved.gif" alt="Race Opening" style={styles.gif} />
+
+          {/* Nút đặc biệt ở dưới */}
+          <button style={styles.button} onClick={onClose}>
+            🏁 Vào đường đua
+          </button>
+        </div>
       </div>
     </Modal>
   );
@@ -42,7 +45,7 @@ function OpeningModal({ isOpen, onClose }: OpeningModalProps) {
 
 const styles: { [key: string]: CSSProperties } = {
   overlay: {
-    backgroundColor: "rgba(0,0,0,0.7)",
+    backgroundColor: "rgba(0,0,0,0.8)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -51,49 +54,69 @@ const styles: { [key: string]: CSSProperties } = {
   content: {
     position: "relative",
     inset: "auto",
-    padding: "20px",
-    borderRadius: "20px",
-    backgroundColor: "#1a1a1a",
-    maxWidth: "400px",
-    width: "90%",
-    margin: "auto",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.6)",
+    padding: 0,
+    border: "none",
+    background: "transparent",
+    width: "100vw",
+    maxWidth: "100%",
+    overflow: "hidden",
   },
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+  backgroundWrapper: {
+    position: "relative",
+    width: "100vw",
     textAlign: "center",
-    color: "#fff",
+    overflow: "hidden",
   },
-  gif: {
-    width: "200px",
-    height: "200px",
-    objectFit: "contain",
-    marginBottom: "20px",
+  backgroundImg: {
+    width: "100vw",
+    height: "100vh",
+    display: "block",
+  },
+  centerContainer: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    display: "flex",
+    flexDirection: "column", // xếp theo cột
+    alignItems: "center",
+    justifyContent: 'space-between',
+    // gap: "24px", // khoảng cách giữa text - gif - button
+    width: "100%",
+    height: "100%",
+  },
+  textContainer: {
+    background: "rgba(0,0,0,0.6)",
+    padding: "16px 32px",
+    borderRadius: "20px",
   },
   title1: {
-    fontSize: "2rem",
+    fontSize: "2.5rem",
     fontWeight: "bold",
-    color: "#FFD700", // vàng
+    color: "#FFD700",
     marginBottom: "8px",
   },
   title2: {
-    fontSize: "1.5rem",
+    fontSize: "1.8rem",
     fontWeight: "bold",
-    color: "#ffffff",
-    marginBottom: "20px",
+    color: "#fff",
+  },
+  gif: {
+    width: "50%",
+    height: "auto",
   },
   button: {
-    marginTop: "10px",
-    padding: "10px 24px",
-    fontSize: "1rem",
+    padding: "16px 40px",
+    fontSize: "1.4rem",
     fontWeight: "bold",
-    backgroundColor: "#e53935",
+    background: "linear-gradient(90deg, #ff512f, #dd2476)",
     color: "#fff",
     border: "none",
-    borderRadius: "12px",
+    borderRadius: "30px",
     cursor: "pointer",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.5)",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease",
+    marginBottom: "20px",
   },
 };
 

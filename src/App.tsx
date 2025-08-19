@@ -7,8 +7,8 @@ function App() {
 
   return (
     <div>
-      <button onClick={() => setIsOpen(true)}>Mở</button>
-      {/* <GroupRaceTrack/> */}
+      {/* <button onClick={() => setIsOpen(true)}>Mở</button> */}
+      <GroupRaceTrack/>
       <OpeningModal isOpen={isOpen} onClose={()=>setIsOpen(false)}/>
     </div>
   )

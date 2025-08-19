@@ -2,12 +2,19 @@ import React, { useRef, useState, useEffect } from "react";
 import MediaInfoFactory from "mediainfo.js";
 import type { CSSProperties } from "react";
 
+type VideoTrack = {
+    [key: string]: any;
+    FrameRate?: string;
+    ["@type"]: string;
+};
+
 type RaceTrackType = {
     trackID: number
     SEGMENTS?: number
     startPos?: number
     endPos?: number
     carType?: number
+    carNumber: number
 }
 
 function RaceTrack({
@@ -15,7 +22,8 @@ function RaceTrack({
     SEGMENTS = 7,
     startPos = -20,
     endPos = 50,
-    carType = 1
+    carType = 1,
+    carNumber
 }: RaceTrackType) {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const [duration, setDuration] = useState(0);
@@ -41,9 +49,9 @@ function RaceTrack({
 
             const videoTrack =
                 result.media && Array.isArray(result.media.track)
-                    ? result.media.track.find((t: any) => t["@type"] === "Video")
+                    ? result.media.track.find((t: any) => t["@type"] === "Video") as VideoTrack
                     : null;
-            const frameRate = videoTrack?.["FrameRate"];
+            const frameRate = videoTrack?.FrameRate;
             if (frameRate) setFps(parseFloat(frameRate));
         } catch (err) {
             console.warn("Không lấy được fps, mặc định 30fps");
@@ -125,13 +133,13 @@ function RaceTrack({
                 Trình duyệt không hỗ trợ video.
             </video>
             <div style={styles.GroupCar} id={`car-img-${trackID}`}>
-            <img
-                src={`/cars/type_${carType}.png`}
-                alt="xe"
-                style={styles.car}
-            />
+                <img
+                    src={`/cars/type_${carType}.png`}
+                    alt="xe"
+                    style={styles.car}
+                />
 
-            <div style={styles.text}>{carType}</div>
+                <div style={styles.text}>{carNumber}</div>
             </div>
 
         </div>
