@@ -14,7 +14,7 @@ type QuestionModalProps = {
     numTeams: number;
 };
 
-function QuestionModal({ isOpen, onClose, type, questnum, correctAnswersTeam, setCorrectAnswersTeam , numTeams}: QuestionModalProps) {
+function QuestionModal({ isOpen, onClose, type, questnum, correctAnswersTeam, setCorrectAnswersTeam, numTeams }: QuestionModalProps) {
     // const [selectedTeams, setSelectedTeams] = useState<number[]>([]);
     const typeKey = `type_${type}` as keyof typeof questionList;
     const questions = questionList[typeKey] || [];
@@ -40,41 +40,52 @@ function QuestionModal({ isOpen, onClose, type, questnum, correctAnswersTeam, se
                 content: styles.content,
             }}
         >
-            <div style={styles.wrapper}>
-                {/* Title */}
-                <h2 style={styles.title}>{question.title}</h2>
 
-                {/* Heading */}
-                <h3 style={styles.heading}>{question.heading}</h3>
-
-                {/* Hình ảnh */}
-                <img
-                    src={`/questions/type_${type}.png`}
-                    alt={`Type ${type}`}
-                    style={styles.image}
-                />
-
-                {/* Question */}
-                <p style={styles.question}>{question.questions}</p>
-
-                {/* 4 Hộp chọn đội */}
-                <div style={styles.teamsWrapper}>
-                    {Array.from({ length: numTeams }, (_, i) => i + 1).map((team) => (
-                        <div
-                            key={team}
-                            style={{
-                                ...styles.teamBox,
-                                backgroundColor: correctAnswersTeam.includes(team)
-                                    ? "#ff512f"
-                                    : "#eee",
-                                color: correctAnswersTeam.includes(team) ? "#fff" : "#333",
-                            }}
-                            onClick={() => toggleTeam(team)}
-                        >
-                            Đội {team}
-                        </div>
-                    ))}
+            
+            <div style={styles.container}>
+                <div style={styles.imageWrapper}>
+                    <h3 style={styles.heading}>{question.heading}</h3>
+                    {/* Hình ảnh type */}
+                    <img
+                        src={`/questions/type_${type}.png`}
+                        alt={`Type ${type}`}
+                        style={styles.image}
+                    />
                 </div>
+
+                <div style={styles.wrapper}>
+                    {/* Title */}
+                    {/* <h2 style={styles.title}>{question.title}</h2> */}
+
+                    {/* Heading */}
+                    {/* <h3 style={styles.heading}>{question.heading}</h3> */}
+
+                    {/* Hình ảnh */}
+
+
+                    {/* Question */}
+                    <p style={styles.question}>{question.questions}</p>
+
+                    {/* 4 Hộp chọn đội */}
+                </div>
+            </div>
+
+            <div style={styles.teamsWrapper}>
+                {Array.from({ length: numTeams }, (_, i) => i + 1).map((team) => (
+                    <div
+                        key={team}
+                        style={{
+                            ...styles.teamBox,
+                            backgroundColor: correctAnswersTeam.includes(team)
+                                ? "#ff512f"
+                                : "#eee",
+                            color: correctAnswersTeam.includes(team) ? "#fff" : "#333",
+                        }}
+                        onClick={() => toggleTeam(team)}
+                    >
+                        Đội {team}
+                    </div>
+                ))}
             </div>
         </Modal>
     );
@@ -88,40 +99,49 @@ const styles: { [key: string]: CSSProperties } = {
         justifyContent: "center",
         zIndex: 1000,
     },
+    container: {
+        display: "flex",
+        flexDirection: "row",
+    },
     content: {
         position: "relative",
         inset: "auto",
         padding: 0,
         border: "none",
         background: "transparent",
-        maxWidth: "800px",
-        width: "90%",
+        // maxWidth: "800px",
+        width: "85%",
         overflow: "hidden",
     },
     wrapper: {
+        flex: 1,
         borderRadius: "16px",
         padding: "24px",
         textAlign: "center",
+        width: "100%",
+        alignContent: 'center'
     },
     title: {
-        fontSize: "1.8rem",
+        fontSize: "3rem",
         fontWeight: "bold",
-        marginBottom: "12px",
     },
     heading: {
-        fontSize: "1.2rem",
+        fontSize: "3rem",
         fontWeight: "600",
-        marginBottom: "20px",
+        textAlign: "center",
+    },
+    question: {
+        fontSize: "3rem",
+    },
+    imageWrapper:{
+flex: 2,
     },
     image: {
+        flex: 2,
         width: "100%",
         height: "auto",
         borderRadius: "12px",
         marginBottom: "20px",
-    },
-    question: {
-        fontSize: "1.1rem",
-        marginBottom: "24px",
     },
     button: {
         padding: "16px 32px",
@@ -148,6 +168,7 @@ const styles: { [key: string]: CSSProperties } = {
         cursor: "pointer",
         transition: "all 0.2s ease",
         userSelect: "none",
+        textAlign: "center",
     },
 };
 

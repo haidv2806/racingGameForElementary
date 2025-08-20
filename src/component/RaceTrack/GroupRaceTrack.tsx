@@ -24,13 +24,12 @@ function GroupRaceTrack({ type, onNextStage }: GroupRaceTrackProps) {
   const [teamScores, setTeamScores] = useState<number[]>([0, 0, 0, 0]);
 
   const carsData = [
-    { trackID: 1, carType: 6, carNumber: 1 },
-    { trackID: 2, carType: 7, carNumber: 2 },
-    { trackID: 3, carType: 8, carNumber: 3 },
-    { trackID: 4, carType: 9, carNumber: 4 },
+    { trackID: 1, carType: 1, carNumber: 1 },
+    { trackID: 2, carType: 2, carNumber: 2 },
+    { trackID: 3, carType: 3, carNumber: 3 },
+    { trackID: 4, carType: 4, carNumber: 4 },
   ];
   const carRefs = carsData.map(() => useRef<RaceTrackHandle>(null));
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
 

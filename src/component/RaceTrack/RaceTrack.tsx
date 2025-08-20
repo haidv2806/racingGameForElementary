@@ -22,13 +22,15 @@ type RaceTrackType = {
     carNumber: number
 };
 
+let engineMusic: HTMLAudioElement;
+
 const RaceTrack = React.forwardRef<RaceTrackHandle, RaceTrackType>(
     (
         {
             trackID,
             SEGMENTS = 7,
-            startPos = -20,
-            endPos = 67,
+            startPos = -30,
+            endPos = 65,
             carType = 1,
             carNumber
         },
@@ -39,6 +41,13 @@ const RaceTrack = React.forwardRef<RaceTrackHandle, RaceTrackType>(
         const [fps, setFps] = useState<number>(30);
         const [currentIndex, setCurrentIndex] = useState(0);
         const [targetFrame, setTargetFrame] = useState<number | null>(null);
+
+        if (!engineMusic) {
+            engineMusic = new Audio("/audio/engine.mp3");
+            // engineMusic.loop = true;
+            engineMusic.volume = 1;
+        }
+
 
         // đọc metadata video
         const handleLoadedMetadata = async () => {
@@ -97,11 +106,21 @@ const RaceTrack = React.forwardRef<RaceTrackHandle, RaceTrackType>(
                         (car as HTMLImageElement).style.bottom = `${carPos}%`;
                     }
 
+                    if (!videoRef.current.paused) {
+                        engineMusic.play().catch(err => console.log("Không thể phát nhạc:", err));
+                    } else {
+                        engineMusic.pause();
+                        engineMusic.currentTime = 0; // nếu muốn reset âm thanh về đầu
+                    }
+
                     // dừng đúng checkpoint
                     if (currentFrame >= targetFrame) {
                         videoRef.current.pause();
                         videoRef.current.currentTime = targetFrame / fps;
                         setTargetFrame(null);
+
+                        engineMusic.pause();
+                        engineMusic.currentTime = 0;
                         return;
                     }
                 }
@@ -165,7 +184,7 @@ const RaceTrack = React.forwardRef<RaceTrackHandle, RaceTrackType>(
                         alt="xe"
                         style={styles.car}
                     />
-                    <div style={styles.text}>{carNumber}</div>
+                    {/* <div style={styles.text}>{carNumber}</div> */}
                 </div>
             </div>
         );
@@ -189,7 +208,7 @@ const styles: { [key: string]: CSSProperties } = {
     },
     GroupCar: {
         position: "absolute",
-        bottom: "-20%",
+        bottom: "-30%",
         left: "50%",
         transform: "translateX(-50%)",
         width: "50%",
@@ -199,20 +218,6 @@ const styles: { [key: string]: CSSProperties } = {
         width: "100%",
         display: "block",
     },
-    text: {
-        position: "absolute",
-        textAlign: "center",
-        width: "40%",
-        height: "20%",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -0%)",
-        fontSize: "2rem",
-        fontWeight: "bold",
-        color: "#000",
-        backgroundColor: "rgba(255,255,255,0.6)",
-        borderRadius: "50%"
-    }
 };
 
 export default RaceTrack

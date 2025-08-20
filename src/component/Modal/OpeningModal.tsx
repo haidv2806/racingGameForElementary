@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Modal from "react-modal";
 import type { CSSProperties } from "react";
 
@@ -8,7 +9,38 @@ type OpeningModalProps = {
   onClose: () => void;
 };
 
+let wellcomeMusic: HTMLAudioElement;
+
 function OpeningModal({ isOpen, onClose }: OpeningModalProps) {
+
+  useEffect(() => {
+    if (!wellcomeMusic) {
+      wellcomeMusic = new Audio("/audio/wellcome.mp3");
+      // bgMusic.loop = true;
+
+      const audioCtx = new AudioContext();
+      const source = audioCtx.createMediaElementSource(wellcomeMusic);
+      const gainNode = audioCtx.createGain();
+
+      // Tăng gấp đôi âm lượng
+      gainNode.gain.value = 5.0;
+
+      source.connect(gainNode).connect(audioCtx.destination);
+
+      // Resume context sau khi có interaction
+      const resumeCtx = () => {
+        if (audioCtx.state === "suspended") {
+          audioCtx.resume();
+        }
+        wellcomeMusic.play().catch(err => console.log("Không thể phát nhạc:", err));
+        document.removeEventListener("click", resumeCtx);
+      };
+
+      document.addEventListener("click", resumeCtx);
+    }
+  }, []);
+
+
   return (
     <Modal
       isOpen={isOpen}
@@ -86,18 +118,18 @@ const styles: { [key: string]: CSSProperties } = {
     height: "100%",
   },
   textContainer: {
-    background: "rgba(0,0,0,0.6)",
+    background: "rgba(0,0,0,0.8)",
     padding: "16px 32px",
     borderRadius: "20px",
   },
   title1: {
-    fontSize: "2.5rem",
+    fontSize: "3.6rem",
     fontWeight: "bold",
     color: "#FFD700",
     marginBottom: "8px",
   },
   title2: {
-    fontSize: "1.8rem",
+    fontSize: "5rem",
     fontWeight: "bold",
     color: "#fff",
   },

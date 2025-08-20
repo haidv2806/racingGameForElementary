@@ -31,9 +31,24 @@ function WinnerModal({ type, isOpen, teamScores, carsData, onClose }: WinnerModa
     return (
         <div style={styles.overlay}>
             <div style={styles.modal}>
-                <h2 style={styles.text}>Kết quả cuộc đua 🎉 thứ {type}</h2>
+                <h2 style={styles.text}>Chúc mừng bạn đã về đích chặng {type} 🎉</h2>
 
-                <div style={styles.carsRow}>
+                <div style={styles.carBox}>
+                    <img
+                        src={`/trophy.png`}
+                        alt={`Xe đội ${ranking[0].team}`}
+                        style={styles.trophyImg}
+                    />
+                    <img
+                        src={`/cars/type_${ranking[0].carType}.png`}
+                        alt={`Xe đội ${ranking[0].team}`}
+                        style={styles.carImg}
+                    />
+                    <div style={styles.text}>Điểm: {ranking[0].score}</div>
+                    
+                </div>
+
+                {/* <div style={styles.carsRow}>
                     {ranking.map((r) => (
                         <div key={r.team} style={styles.carBox}>
                             <img
@@ -41,12 +56,10 @@ function WinnerModal({ type, isOpen, teamScores, carsData, onClose }: WinnerModa
                                 alt={`Xe đội ${r.team}`}
                                 style={styles.carImg}
                             />
-                            <div style={styles.text}>Đội {r.team}</div>
                             <div style={styles.text}>Điểm: {r.score}</div>
-                            <div style={styles.text}>Hạng: {r.rank}</div>
                         </div>
                     ))}
-                </div>
+                </div> */}
 
                 <button onClick={onClose} style={styles.closeBtn}>
                     {type >= Object.keys(questionList).length
@@ -92,12 +105,16 @@ const styles: { [key: string]: CSSProperties } = {
         flexDirection: "column",
         alignItems: "center",
     },
+    trophyImg: {
+        width: "400px",
+        height: "auto",
+    },
     carImg: {
         width: "120px",
         height: "auto",
     },
     text: {
-        fontSize: "1.2rem",
+        fontSize: "3rem",
         fontWeight: "bold",
         marginTop: "6px",
         color: "#333",

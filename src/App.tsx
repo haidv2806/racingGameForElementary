@@ -12,7 +12,7 @@ function App() {
     if (!bgMusic) {
       bgMusic = new Audio("/theme.mp3");
       bgMusic.loop = true;
-      bgMusic.volume = 0.5;
+      bgMusic.volume = 0.1;
     }
 
     const playMusic = () => {
