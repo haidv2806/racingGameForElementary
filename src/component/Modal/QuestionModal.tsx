@@ -1,5 +1,5 @@
 import Modal from "react-modal";
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import questionList from "../../questionList";
 
 Modal.setAppElement("#root");
@@ -15,7 +15,7 @@ type QuestionModalProps = {
 };
 
 function QuestionModal({ isOpen, onClose, type, questnum, correctAnswersTeam, setCorrectAnswersTeam, numTeams }: QuestionModalProps) {
-    // const [selectedTeams, setSelectedTeams] = useState<number[]>([]);
+    const [isShowAnswer, setIsShowAnswer] = useState<boolean>(false)
     const typeKey = `type_${type}` as keyof typeof questionList;
     const questions = questionList[typeKey] || [];
     const question = questions[questnum - 1]; // questnum bắt đầu từ 1
@@ -30,11 +30,16 @@ function QuestionModal({ isOpen, onClose, type, questnum, correctAnswersTeam, se
             prev.includes(team) ? prev.filter((t) => t !== team) : [...prev, team]
         );
     };
+    
+    function handleCloseModal(){
+        onClose()
+        setIsShowAnswer(false)
+    }
 
     return (
         <Modal
             isOpen={isOpen}
-            onRequestClose={onClose}
+            onRequestClose={handleCloseModal}
             style={{
                 overlay: styles.overlay,
                 content: styles.content,
@@ -53,20 +58,11 @@ function QuestionModal({ isOpen, onClose, type, questnum, correctAnswersTeam, se
                     />
                 </div>
 
-                <div style={styles.wrapper}>
-                    {/* Title */}
-                    {/* <h2 style={styles.title}>{question.title}</h2> */}
-
-                    {/* Heading */}
-                    {/* <h3 style={styles.heading}>{question.heading}</h3> */}
-
-                    {/* Hình ảnh */}
-
-
-                    {/* Question */}
+                <div style={styles.wrapper} onClick={()=> setIsShowAnswer(true)}>
                     <p style={styles.question}>{question.questions}</p>
-
-                    {/* 4 Hộp chọn đội */}
+                    {isShowAnswer && (
+                        <p style={styles.question}>{question.answer}</p>
+                    )}
                 </div>
             </div>
 

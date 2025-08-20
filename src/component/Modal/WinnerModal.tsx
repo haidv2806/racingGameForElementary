@@ -33,7 +33,7 @@ function WinnerModal({ type, isOpen, teamScores, carsData, onClose }: WinnerModa
             <div style={styles.modal}>
                 <h2 style={styles.text}>Chúc mừng bạn đã về đích chặng {type} 🎉</h2>
 
-                <div style={styles.carBox}>
+                {/* <div style={styles.carBox}>
                     <img
                         src={`/trophy.png`}
                         alt={`Xe đội ${ranking[0].team}`}
@@ -45,12 +45,18 @@ function WinnerModal({ type, isOpen, teamScores, carsData, onClose }: WinnerModa
                         style={styles.carImg}
                     />
                     <div style={styles.text}>Điểm: {ranking[0].score}</div>
-                    
-                </div>
+                </div> */}
 
-                {/* <div style={styles.carsRow}>
+                <div style={styles.carsRow}>
                     {ranking.map((r) => (
                         <div key={r.team} style={styles.carBox}>
+                            {r.team == ranking[0].team && (
+                                <img
+                                    src={`/trophy.png`}
+                                    alt={`Xe đội ${ranking[0].team}`}
+                                    style={styles.trophyImg}
+                                />
+                            )}
                             <img
                                 src={`/cars/type_${r.carType}.png`}
                                 alt={`Xe đội ${r.team}`}
@@ -59,7 +65,7 @@ function WinnerModal({ type, isOpen, teamScores, carsData, onClose }: WinnerModa
                             <div style={styles.text}>Điểm: {r.score}</div>
                         </div>
                     ))}
-                </div> */}
+                </div>
 
                 <button onClick={onClose} style={styles.closeBtn}>
                     {type >= Object.keys(questionList).length
@@ -90,7 +96,6 @@ const styles: { [key: string]: CSSProperties } = {
         padding: "20px",
         borderRadius: "12px",
         width: "80%",
-        maxWidth: "1000px",
         textAlign: "center",
     },
     carsRow: {

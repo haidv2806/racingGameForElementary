@@ -5,6 +5,7 @@ import questionList from "../../questionList";
 import QuestionModal from "../Modal/QuestionModal";
 import WinnerModal from "../Modal/WinnerModal";
 import EnddingModal from "../Modal/EnddingModal";
+import OpeningModal from "../Modal/OpeningModal";
 
 type GroupRaceTrackProps = {
   type: number;
@@ -17,6 +18,7 @@ function GroupRaceTrack({ type, onNextStage }: GroupRaceTrackProps) {
   const totalQuestions = questions.length;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOoeningModalOpen, setIsOoeningModalOpen] = useState<boolean>(true)
   const [isWinnerOpen, setIsWinnerOpen] = useState(false);
   const [isEnddingOpen, setIsEnddingOpen] = useState(false);
   const [correctAnswersTeam, setCorrectAnswersTeam] = useState<number[]>([]);
@@ -37,7 +39,7 @@ function GroupRaceTrack({ type, onNextStage }: GroupRaceTrackProps) {
     const newScores = [...teamScores];
     correctAnswersTeam.forEach((team) => {
       carRefs[team - 1].current?.run();
-      newScores[team - 1] += 1;
+      newScores[team - 1] += type;
     });
     setTeamScores(newScores);
 
@@ -50,6 +52,7 @@ function GroupRaceTrack({ type, onNextStage }: GroupRaceTrackProps) {
       setCurrentQuestion((prev) => prev + 1);
       setIsModalOpen(true);
     } else {
+      setIsOoeningModalOpen(true)
       setIsWinnerOpen(true);
     }
   }
@@ -65,7 +68,7 @@ function GroupRaceTrack({ type, onNextStage }: GroupRaceTrackProps) {
 
       // reset toàn bộ state
       setCurrentQuestion(0);
-      setTeamScores([0, 0, 0, 0]);
+      // setTeamScores([0, 0, 0, 0]);
       setCorrectAnswersTeam([]);
       setIsModalOpen(false);
 
@@ -76,6 +79,9 @@ function GroupRaceTrack({ type, onNextStage }: GroupRaceTrackProps) {
       onNextStage();
     }
   };
+  const [stage, setStage] = useState<
+    "Opening" | "Stage1" | "Stage1Finish" | "stage2" | "Stage2Finish"
+  >("Opening");
 
   return (
     <div style={styles.container}>
@@ -106,17 +112,22 @@ function GroupRaceTrack({ type, onNextStage }: GroupRaceTrackProps) {
         </button>
       )}
 
+      <OpeningModal
+        isOpen={isOoeningModalOpen}
+        onClose={() => setIsOoeningModalOpen(false)}
+      />
+
+      <EnddingModal
+        isOpen={isEnddingOpen}
+        onClose={() => setIsEnddingOpen(false)}
+      />
+
       <WinnerModal
         type={type}
         isOpen={isWinnerOpen}
         teamScores={teamScores}
         carsData={carsData}
         onClose={handleNextStage}
-      />
-
-      <EnddingModal
-        isOpen={isEnddingOpen}
-        onClose={() => setIsEnddingOpen(false)}
       />
     </div>
   );

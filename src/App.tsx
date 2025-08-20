@@ -27,7 +27,7 @@ function App() {
   return (
     <div>
       <GroupRaceTrack type={type} onNextStage={() => setType((prev) => prev + 1)}/>
-      <OpeningModal isOpen={isOpen} onClose={()=>setIsOpen(false)}/>
+      {/* <OpeningModal isOpen={isOpen} onClose={()=>setIsOpen(false)}/> */}
     </div>
   )
 }
