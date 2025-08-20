@@ -79,9 +79,6 @@ function GroupRaceTrack({ type, onNextStage }: GroupRaceTrackProps) {
       onNextStage();
     }
   };
-  const [stage, setStage] = useState<
-    "Opening" | "Stage1" | "Stage1Finish" | "stage2" | "Stage2Finish"
-  >("Opening");
 
   return (
     <div style={styles.container}>

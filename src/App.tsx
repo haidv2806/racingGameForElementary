@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react'
 import GroupRaceTrack from './component/RaceTrack/GroupRaceTrack'
-import OpeningModal from './component/Modal/OpeningModal';
 
 let bgMusic: HTMLAudioElement;
 
 function App() {
-  const [isOpen, setIsOpen] = useState(true);
   const [type, setType] = useState(1);
 
   useEffect(() => {
@@ -27,7 +25,6 @@ function App() {
   return (
     <div>
       <GroupRaceTrack type={type} onNextStage={() => setType((prev) => prev + 1)}/>
-      {/* <OpeningModal isOpen={isOpen} onClose={()=>setIsOpen(false)}/> */}
     </div>
   )
 }

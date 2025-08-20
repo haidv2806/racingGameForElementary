@@ -9,7 +9,7 @@ type ThankYouModalProps = {
     onClose: () => void;
 };
 
-function EnddingModal({ isOpen, onClose }: ThankYouModalProps) {
+function EnddingModal({ isOpen }: ThankYouModalProps) {
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const audioCtxRef = useRef<AudioContext | null>(null);
 
