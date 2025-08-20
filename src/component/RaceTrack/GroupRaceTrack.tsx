@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import RaceTrack, { type RaceTrackHandle } from "./RaceTrack";
 import questionList from "../../questionList";

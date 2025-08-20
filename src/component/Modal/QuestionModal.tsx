@@ -1,5 +1,4 @@
 import Modal from "react-modal";
-import { useState } from "react";
 import type { CSSProperties } from "react";
 import questionList from "../../questionList";
 
