@@ -32,7 +32,6 @@ const RaceTrack = React.forwardRef<RaceTrackHandle, RaceTrackType>(
             startPos = -30,
             endPos = 65,
             carType = 1,
-            carNumber
         },
         ref
     ) => {
