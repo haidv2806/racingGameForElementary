@@ -30,8 +30,8 @@ function QuestionModal({ isOpen, onClose, type, questnum, correctAnswersTeam, se
             prev.includes(team) ? prev.filter((t) => t !== team) : [...prev, team]
         );
     };
-    
-    function handleCloseModal(){
+
+    function handleCloseModal() {
         onClose()
         setIsShowAnswer(false)
     }
@@ -46,7 +46,7 @@ function QuestionModal({ isOpen, onClose, type, questnum, correctAnswersTeam, se
             }}
         >
 
-            
+
             <div style={styles.container}>
                 <div style={styles.imageWrapper}>
                     <h3 style={styles.heading}>{question.heading}</h3>
@@ -58,7 +58,7 @@ function QuestionModal({ isOpen, onClose, type, questnum, correctAnswersTeam, se
                     />
                 </div>
 
-                <div style={styles.wrapper} onClick={()=> setIsShowAnswer(true)}>
+                <div style={styles.wrapper} onClick={() => setIsShowAnswer(true)}>
                     <p style={styles.question}>{question.questions}</p>
                     {isShowAnswer && (
                         <p style={styles.question}>{question.answer}</p>
@@ -125,12 +125,14 @@ const styles: { [key: string]: CSSProperties } = {
         fontSize: "3rem",
         fontWeight: "600",
         textAlign: "center",
+        color: "#fff"
     },
     question: {
         fontSize: "3rem",
+        color: "#fff"
     },
-    imageWrapper:{
-flex: 2,
+    imageWrapper: {
+        flex: 2,
     },
     image: {
         flex: 2,
